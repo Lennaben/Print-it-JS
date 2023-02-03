@@ -18,3 +18,24 @@ const slides = [
   },
 ];
 
+// cree une boite qui s'apl letfArrow elle permet de stocker l'element avec la class arrowLeft qui contient la fleche
+// au click on declanche une action
+
+const leftArrow = document.querySelector(".arrow_left");
+
+const rightArrow = document.querySelector(".arrow_right");
+
+// au click sur la fleche on fait un "truc"
+// addEventListener permet d'ecouter un evenement (le click)
+
+leftArrow.addEventListener("click", () => {
+  alert("j'ai clicker sur le bouton gauche");
+});
+
+rightArrow.addEventListener("click", () => {
+  alert("j'ai cliker sur le bouton droit");
+});
+
+// sert a fiicher des info dans la consol
+
+console.log(arrow);
