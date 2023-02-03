@@ -39,3 +39,9 @@ rightArrow.addEventListener("click", () => {
 // sert a fiicher des info dans la consol
 
 console.log(arrow);
+
+const containerPoints = document.querySelector(".s");
+
+slides.map((slide) => {
+  const dots = document.createElement("div");
+});
