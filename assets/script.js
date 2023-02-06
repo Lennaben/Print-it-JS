@@ -1,3 +1,5 @@
+let countSlide = 0;
+
 const slides = [
   {
     image: "slide1.jpg",
@@ -24,24 +26,68 @@ const slides = [
 const leftArrow = document.querySelector(".arrow_left");
 
 const rightArrow = document.querySelector(".arrow_right");
+let allDots = [];
 
 // au click sur la fleche on fait un "truc"
 // addEventListener permet d'ecouter un evenement (le click)
 
 leftArrow.addEventListener("click", () => {
-  alert("j'ai clicker sur le bouton gauche");
+  countSlide--;
+  console.log("clik gauche", countSlide);
+  // on cherhce tout les points et on les stock dans la const dots (tableau)
+  // get element by class name = aller chercher les element
+  const dots = document.getElementsByClassName("dot");
+  // on boucle sur le tableau dots
+  for (const dot of dots) {
+    // on supp la class dot_selected
+    dot.classList.remove("dot_selected");
+  }
+  document
+    .getElementsByClassName("dot")
+    [countSlide].classList.add("dot_selected");
 });
 
 rightArrow.addEventListener("click", () => {
-  alert("j'ai cliker sur le bouton droit");
+  countSlide++;
+  console.log("clik droit", countSlide);
+  // on cherhce tout les points et on les stock dans la const dots (tableau)
+  // get element by class name = aller chercher les element
+  const dots = document.getElementsByClassName("dot");
+  // on boucle sur le tableau dots
+  for (const dot of dots) {
+    // on supp la class dot_selected
+    dot.classList.remove("dot_selected");
+  }
+  document
+    .getElementsByClassName("dot")
+    [countSlide].classList.add("dot_selected");
 });
 
-// sert a fiicher des info dans la consol
+// sert a afficher des info dans la console
+// console.log(arrow);
+// / on récupère l'endroit dans lequel on va afficher les points (html)
+const containerPoints = document.querySelector(".dots");
 
-console.log(arrow);
+// pour chacun des truc dans mon tableau
+let countDot = 0;
+slides.map((slide, i) => {
+  console.log(i);
+  // on crée une div
+  // <div></div>
+  const point = document.createElement("div");
+  // on donne à  la div la class "dot"
+  // <div class='dot'></div>
+  point.classList.add("dot");
 
-const containerPoints = document.querySelector(".s");
+  if (countDot === 0) {
+    point.classList.add("dot_selected");
+    countDot++;
+  }
+  // on attache notre div (.dot) à notre container (.dots) qui doit contenir tous les points
+  // <div class='dots'>
+  //   <div class="dot"></div>
+  // </div>
+  containerPoints.appendChild(point);
 
-slides.map((slide) => {
-  const dots = document.createElement("div");
+  allDots.push(point);
 });
