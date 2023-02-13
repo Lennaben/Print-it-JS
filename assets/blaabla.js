@@ -1,9 +1,9 @@
+//  on initialise le compteur à 0
 let countSlide = 0
-
-//let change, const non
 
 // les [] = tableau, le tableau des slides
 
+//  un tableau qui contient 4 objets , un object est composé du nom de l'image et de la phrase associée
 const slides = [
   {
     image: "slide1.jpg",
@@ -24,23 +24,29 @@ const slides = [
   },
 ]
 
-// document = chercher dans toute la page, querySelector = qui remonte l'element HTML qui as applé la class
-
+// on séléction l'élément avec la class ' arrow_left '  et on le stock  dans la constante leftArrow
 const leftArrow = document.querySelector(".arrow_left")
 const rightArrow = document.querySelector(".arrow_right")
 
 let allDots = []
 
-// addEventListener = rajoute un "ecouteur" = quand on clik sur leftArrow
-// ()
-
+// au click sur leftArrow on va faire des trucs
 leftArrow.addEventListener("click", (e) => {
+  // on empêche le comportement par défaut de l'élément
   e.preventDefault()
+
+  // si countslide est égale ou plus petit que la longueur du tableau ou que countslide est supérieur à 0
   if (countSlide <= slides.length && countSlide > 0) {
     countSlide--
   } else {
     countSlide = 4
   }
+
+  // if ( 0 <= 3 && 0 > 0) {
+  //   0 - 1
+  // } else {
+  //   0 = 4
+  // }
 
   //   console.log("clik droit", countSlide);
   const dots = document.querySelectorAll(".dot")
@@ -69,7 +75,7 @@ rightArrow.addEventListener("click", (e) => {
   }
 
   document.querySelectorAll(".dot")[countSlide].classList.add("dot_selected")
-  
+
   console.log(countDot)
   let img = document.querySelector(".banner-img")
   img.src = "./assets/images/slideshow/" + slides[countSlide].image
