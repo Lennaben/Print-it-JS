@@ -1,5 +1,9 @@
-let countSlide = 0;
+//  on initialise le compteur à 0
+let countSlide = 0
 
+// les [] = tableau, le tableau des slides
+
+//  un tableau qui contient 4 objets , un object est composé du nom de l'image et de la phrase associée
 const slides = [
   {
     image: "slide1.jpg",
@@ -18,76 +22,96 @@ const slides = [
     image: "slide4.png",
     tagLine: "Autocollants <span>avec découpe laser sur mesure</span>",
   },
-];
+]
 
-// cree une boite qui s'apl letfArrow elle permet de stocker l'element avec la class arrowLeft qui contient la fleche
-// au click on declanche une action
+// CREATION DES FLECHES
 
-const leftArrow = document.querySelector(".arrow_left");
+// on séléction l'élément avec la class ' arrow_left '  et on le stock  dans la constante leftArrow
+const leftArrow = document.querySelector(".arrow_left")
+const rightArrow = document.querySelector(".arrow_right")
 
-const rightArrow = document.querySelector(".arrow_right");
-let allDots = [];
+// FLECHE GAUCHE
 
-// au click sur la fleche on fait un "truc"
-// addEventListener permet d'ecouter un evenement (le click)
+// au click sur leftArrow on va faire des trucs
+leftArrow.addEventListener("click", (e) => {
+  // on empêche le comportement par défaut de l'élément
+  e.preventDefault()
 
-leftArrow.addEventListener("click", () => {
-  countSlide--;
-  console.log("clik gauche", countSlide);
-  // on cherhce tout les points et on les stock dans la const dots (tableau)
-  // get element by class name = aller chercher les element
-  const dots = document.getElementsByClassName("dot");
-  // on boucle sur le tableau dots
-  for (const dot of dots) {
-    // on supp la class dot_selected
-    dot.classList.remove("dot_selected");
+  // si on est sur l'image 0, le compteur passeras a la position 3 losque que l'on click sur la fleche de gauche
+  if (countSlide <= 0) {
+    // countslide = longueur du tableau (4) - 1 pour obtenir la position 3
+    countSlide = slides.length - 1
+  } else {
+    // countslide = countslide - 1
+    countSlide--
   }
-  document
-    .getElementsByClassName("dot")
-    [countSlide].classList.add("dot_selected");
-});
 
-rightArrow.addEventListener("click", () => {
-  countSlide++;
-  console.log("clik droit", countSlide);
-  // on cherhce tout les points et on les stock dans la const dots (tableau)
-  // get element by class name = aller chercher les element
-  const dots = document.getElementsByClassName("dot");
-  // on boucle sur le tableau dots
+  // on récupère tous les points
+  const dots = document.querySelectorAll(".dot")
+  // pout chacun des points on retire la class dot_selected ( on retire les points blancs )
   for (const dot of dots) {
-    // on supp la class dot_selected
-    dot.classList.remove("dot_selected");
+    dot.classList.remove("dot_selected")
   }
-  document
-    .getElementsByClassName("dot")
-    [countSlide].classList.add("dot_selected");
-});
 
-// sert a afficher des info dans la console
-// console.log(arrow);
-// / on récupère l'endroit dans lequel on va afficher les points (html)
-const containerPoints = document.querySelector(".dots");
+  // on va mettre en blanc le point à la position countslide ( on ajoute la classe dot_selected au dot numero [countslide ])
+  document.querySelectorAll(".dot")[countSlide].classList.add("dot_selected")
+  console.log("negative count", countSlide)
+  // on recupere la balsie image
+  let img = document.querySelector(".banner-img")
+  // on ajoute la source avec le chemin d'acces + le nom de l'image sur la slide corespondante
+  img.src = "./assets/images/slideshow/" + slides[countSlide].image
+  let tagPar = document.querySelector(".tagPar")
+  tagPar.innerHTML = slides[countSlide].tagLine
+})
 
-// pour chacun des truc dans mon tableau
-let countDot = 0;
-slides.map((slide, i) => {
-  console.log(i);
-  // on crée une div
-  // <div></div>
-  const point = document.createElement("div");
-  // on donne à  la div la class "dot"
-  // <div class='dot'></div>
-  point.classList.add("dot");
+//FLECHE DROITE
 
+rightArrow.addEventListener("click", (e) => {
+  e.preventDefault()
+  //  Si countslide est inferieur ou égal à la longueur du tableau - 1 (3)
+  if (countSlide >= slides.length - 1) {
+    // alors countslide = 0
+    countSlide = 0
+  } else {
+    // sinon countslide = countslide + 1
+    countSlide++
+  }
+
+  const dots = document.querySelectorAll(".dot")
+  for (const dot of dots) {
+    dot.classList.remove("dot_selected")
+  }
+
+  document.querySelectorAll(".dot")[countSlide].classList.add("dot_selected")
+
+  console.log("positive count", countSlide)
+  let img = document.querySelector(".banner-img")
+  img.src = "./assets/images/slideshow/" + slides[countSlide].image
+  let tagPar = document.querySelector(".tagPar")
+  tagPar.innerHTML = slides[countSlide].tagLine
+})
+
+const containerPoints = document.querySelector(".dots")
+
+// compteur de points
+let countDot = 0
+
+// pour chacun des objets dans notre tableau slide
+slides.map((i) => {
+  console.log(i)
+  // on crée un élément div
+  const point = document.createElement("div")
+  // on lui ajoute la class dot
+  point.classList.add("dot")
+
+  // si le compteur de points = 0
   if (countDot === 0) {
-    point.classList.add("dot_selected");
-    countDot++;
+    // on ajoute la class dot_selected
+    point.classList.add("dot_selected")
+    // on augmente le compteur de 1
+    countDot++
   }
-  // on attache notre div (.dot) à notre container (.dots) qui doit contenir tous les points
-  // <div class='dots'>
-  //   <div class="dot"></div>
-  // </div>
-  containerPoints.appendChild(point);
 
-  allDots.push(point);
-});
+  // on attache les points à notre container de points
+  containerPoints.appendChild(point)
+})
